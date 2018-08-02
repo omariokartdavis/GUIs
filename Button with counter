@@ -7,6 +7,9 @@
 ##         pass the additional argument. Therefore the self.button.bind('<Button-1>') is needed to bind the click of the button
 ##         to the update_count function.
 
+
+from tkinter import *
+
 class Application(Frame): 
     """ A GUI application with three buttons. """
     
