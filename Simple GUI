@@ -1,0 +1,11 @@
+from tkinter import *
+
+#create the window
+root = Tk()
+
+#modify the root window
+root.title("Simple GUI")
+root.geometry("1000x500")
+
+#kick off the event loop
+root.mainloop()
