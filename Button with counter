@@ -1,0 +1,66 @@
+##updated past the video. enclosed the root = Tk() etc. into the __init__ function. This inclused title and size.
+##         This also means that 'master' is no longer needed to pass through the __init__ and in the Frame.__init__ it is
+##         replaced by self.root. Now things can be bound to the GUI as a whole like the self.root.bind('<Return>') that comes
+##         at the end of the create_widgets function. This allows the enter button to activate the update_count function as long
+##         as you are clicked inside the window when you hit the button. Doing this also requires the update_count func to take
+##         the self argument and one additional argument which means the self.button["command"] no longer works as it doesn't
+##         pass the additional argument. Therefore the self.button.bind('<Button-1>') is needed to bind the click of the button
+##         to the update_count function.
+
+class Application(Frame): 
+    """ A GUI application with three buttons. """
+    
+    def __init__(self):
+        """ Initializes the Frame"""
+        
+        self.root = Tk()
+        #self.root.geometry("400x200")     If no geometry input is given, the window will be the exact necessary size only.
+        self.root.title("Counter Button")
+        
+        # force the GUI window to be the active window on your computer.
+        self.root.focus_force()
+        
+        Frame.__init__(self, self.root)
+        
+        
+        self.grid()
+        self.button_clicks =0 #counts the number of button clicks
+        self.create_widgets()
+        
+        # ADVANCED: bind the return key to the button click
+        self.root.bind('<Return>', self.update_count)
+        
+        #ADVANCED: bind the escape key to close the window
+        self.root.bind("<Escape>", self.close)
+        
+    def create_widgets(self):
+        """Create button which displays number of clicks"""
+        #create buttons
+        self.button = Button(self)
+        self.button["text"] = "Total Clicks: 0"
+        #self.button["command"] = self.update_count          see beginning explanation as to why this is commented out
+        self.button.bind('<Button-1>', self.update_count)
+        self.button.grid()               #everything we just did is called 'binding the event handler'
+        
+        #now we must create the event handler
+    def update_count(self, event):
+        """Increase the click count and display the new total"""
+        self.button_clicks += 1
+        self.button["text"] = "Total Clicks: " + str(self.button_clicks)
+    
+    #the bound escape button from the initialize function needs to close the window
+    def close(self, event):
+        self.root.destroy()
+        
+    def start(self):
+        self.root.mainloop()
+
+        
+## the following are commented out because they have been moved into the class itself instead of being outside
+#root = Tk()
+#root.title("Counter Button")
+#root.geometry("400x200")
+
+#app = Application(root)
+#root.mainloop()     
+Application().start()
